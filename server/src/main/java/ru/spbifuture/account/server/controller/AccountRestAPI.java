@@ -1,5 +1,6 @@
 package ru.spbifuture.account.server.controller;
 
+import io.micrometer.core.annotation.Timed;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,11 +26,13 @@ public class AccountRestAPI implements AccountAPI {
         return exception.getMessage();
     }
 
+    @Timed("account.amount.get")
     @Override
     public Long getAmount(Integer id) {
         return accountService.getAmount(id);
     }
 
+    @Timed("account.amount.add")
     @Override
     public void addAmount(Integer id, Long value) {
         accountService.addAmount(id, value);
