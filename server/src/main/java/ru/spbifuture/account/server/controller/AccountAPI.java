@@ -16,5 +16,5 @@ public interface AccountAPI {
     @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void addAmount(@PathVariable("id") @NotNull @Min(1) Integer id,
-                   @RequestParam("value") @NotNull @Min(1)  Long value);
+                   @RequestBody @NotNull @Min(1) Long value);
 }

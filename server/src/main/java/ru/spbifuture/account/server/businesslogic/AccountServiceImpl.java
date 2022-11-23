@@ -1,7 +1,8 @@
 package ru.spbifuture.account.server.businesslogic;
 
 
-import org.springframework.context.annotation.Primary;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.spbifuture.account.server.persistance.AccountRepository;
@@ -15,6 +16,7 @@ public class AccountServiceImpl implements AccountService {
         this.accountRepository = accountRepository;
     }
 
+    @Cacheable(cacheNames = "amounts", key = "#id")
     @Transactional(readOnly = true)
     @Override
     public Long getAmount(Integer id) {
@@ -25,6 +27,7 @@ public class AccountServiceImpl implements AccountService {
         return account.get().getAmount();
     }
 
+    @CacheEvict(cacheNames = "amounts", key = "#id")
     @Transactional
     @Override
     public void addAmount(Integer id, Long value) {
